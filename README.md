@@ -1,6 +1,6 @@
 # Inventory & Order Management System
 
-A production-ready, fully containerized web application for managing inventory, customers, and orders. Built with **FastAPI**, **React**, **PostgreSQL**, and **Docker**.
+Full-stack inventory & order management app with FastAPI backend and React frontend.
 
 ---
 
@@ -206,10 +206,10 @@ VITE_API_URL=http://localhost:8000 npm run dev
 | Orders      | Order list, multi-step create wizard, detail modal, delete |
 
 ### UI Features
-- Sidebar navigation with SVG icons
-- Responsive layout (mobile + desktop)
+- Sidebar navigation with SVG icons (drawer on mobile with hamburger + backdrop)
+- Responsive mobile layout (hidden columns, full-screen modals, stacked buttons)
 - Loading spinners during API calls
-- Toast notifications for success/error (react-hot-toast)
+- Toast notifications for success/error (react-hot-toast, bottom-center on mobile)
 - Form validation before submit
 - Empty state messages when lists are empty
 
