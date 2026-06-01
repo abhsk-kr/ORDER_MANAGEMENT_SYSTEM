@@ -89,6 +89,16 @@ inventory-management/
 
 ---
 
+## Live Links
+
+| Service  | URL                                                |
+| -------- | -------------------------------------------------- |
+| Frontend | https://inventory-frontend-woad-mu.vercel.app      |
+| Backend  | https://order-management-system-1kin.onrender.com  |
+| API Docs | https://order-management-system-1kin.onrender.com/docs |
+
+---
+
 ## Getting Started
 
 ### Prerequisites
