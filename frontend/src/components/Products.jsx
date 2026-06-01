@@ -99,13 +99,16 @@ export default function Products() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Products</h2>
         <button
           onClick={openAdd}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition-colors"
+          className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition-colors flex items-center justify-center gap-1"
         >
-          + Add Product
+          <svg className="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          <span className="hidden md:inline">+ Add Product</span>
         </button>
       </div>
 
@@ -121,7 +124,7 @@ export default function Products() {
               <thead className="bg-gray-50 text-gray-600">
                 <tr>
                   <th className="text-left px-6 py-3 font-medium">Name</th>
-                  <th className="text-left px-6 py-3 font-medium">SKU</th>
+                  <th className="text-left px-6 py-3 font-medium hidden sm:table-cell">SKU</th>
                   <th className="text-right px-6 py-3 font-medium">Price</th>
                   <th className="text-right px-6 py-3 font-medium">Stock</th>
                   <th className="text-center px-6 py-3 font-medium">Actions</th>
@@ -134,7 +137,7 @@ export default function Products() {
                     className={`hover:bg-gray-50 ${p.quantity < 10 ? 'bg-yellow-50' : ''}`}
                   >
                     <td className="px-6 py-3 font-medium text-gray-800">{p.name}</td>
-                    <td className="px-6 py-3 text-gray-500">{p.sku}</td>
+                    <td className="px-6 py-3 text-gray-500 hidden sm:table-cell">{p.sku}</td>
                     <td className="px-6 py-3 text-right text-gray-800">₹{p.price.toFixed(2)}</td>
                     <td className="px-6 py-3 text-right">
                       <span
@@ -147,18 +150,24 @@ export default function Products() {
                         {p.quantity}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-center">
+                    <td className="px-6 py-3 text-center whitespace-nowrap">
                       <button
                         onClick={() => openEdit(p)}
                         className="text-indigo-600 hover:text-indigo-800 mr-3 text-sm font-medium"
                       >
-                        Edit
+                        <svg className="w-4 h-4 md:hidden inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        <span className="hidden md:inline">Edit</span>
                       </button>
                       <button
                         onClick={() => setConfirmDelete(p.id)}
                         className="text-red-600 hover:text-red-800 text-sm font-medium"
                       >
-                        Delete
+                        <svg className="w-4 h-4 md:hidden inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        <span className="hidden md:inline">Delete</span>
                       </button>
                     </td>
                   </tr>
@@ -171,7 +180,7 @@ export default function Products() {
 
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-bold text-gray-800 mb-4">
               {editingProduct ? 'Edit Product' : 'Add Product'}
             </h3>
@@ -221,18 +230,18 @@ export default function Products() {
                   />
                 </div>
               </div>
-              <div className="flex justify-end gap-3 mt-6">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
+                  className="w-full sm:w-auto px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 text-sm font-medium transition-colors"
+                  className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 text-sm font-medium transition-colors"
                 >
                   {submitting ? 'Saving...' : editingProduct ? 'Update' : 'Create'}
                 </button>
@@ -247,16 +256,16 @@ export default function Products() {
           <div className="bg-white rounded-xl shadow-xl w-full max-w-sm mx-4 p-6">
             <h3 className="text-lg font-bold text-gray-800 mb-2">Confirm Delete</h3>
             <p className="text-gray-600 text-sm">Are you sure you want to delete this product?</p>
-            <div className="flex justify-end gap-3 mt-6">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
               <button
                 onClick={() => setConfirmDelete(null)}
-                className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
+                className="w-full sm:w-auto px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(confirmDelete)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors"
+                className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors"
               >
                 Delete
               </button>

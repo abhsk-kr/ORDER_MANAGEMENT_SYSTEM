@@ -21,13 +21,16 @@ export default function Orders() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Orders</h2>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition-colors"
+          className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition-colors flex items-center justify-center gap-1"
         >
-          + Create Order
+          <svg className="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          <span className="hidden md:inline">+ Create Order</span>
         </button>
       </div>
 
@@ -50,7 +53,7 @@ export default function Orders() {
                   <th className="text-left px-6 py-3 font-medium">Customer</th>
                   <th className="text-right px-6 py-3 font-medium">Total</th>
                   <th className="text-center px-6 py-3 font-medium">Status</th>
-                  <th className="text-left px-6 py-3 font-medium">Date</th>
+                  <th className="text-left px-6 py-3 font-medium hidden sm:table-cell">Date</th>
                   <th className="text-center px-6 py-3 font-medium">Actions</th>
                 </tr>
               </thead>
@@ -75,21 +78,28 @@ export default function Orders() {
                         {o.status}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-gray-500">
+                    <td className="px-6 py-3 text-gray-500 hidden sm:table-cell">
                       {new Date(o.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-3 text-center">
+                    <td className="px-6 py-3 text-center whitespace-nowrap">
                       <button
                         onClick={() => setShowDetailModal(o)}
                         className="text-indigo-600 hover:text-indigo-800 mr-3 text-sm font-medium"
                       >
-                        View
+                        <svg className="w-4 h-4 md:hidden inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <span className="hidden md:inline">View</span>
                       </button>
                       <button
                         onClick={() => setConfirmDelete(o.id)}
                         className="text-red-600 hover:text-red-800 text-sm font-medium"
                       >
-                        Delete
+                        <svg className="w-4 h-4 md:hidden inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        <span className="hidden md:inline">Delete</span>
                       </button>
                     </td>
                   </tr>
@@ -223,11 +233,17 @@ function CreateOrderModal({ onClose, onCreated }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 p-6">
+    <div className="fixed inset-0 z-50 flex items-start justify-center md:items-center bg-black/40 overflow-y-auto">
+      <div className="bg-white w-full min-h-screen md:min-h-0 md:rounded-xl md:shadow-xl md:max-w-2xl md:mx-4 p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-bold text-gray-800">Create Order</h3>
-          <div className="text-sm text-gray-400">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 md:hidden text-xl leading-none"
+          >
+            &times;
+          </button>
+          <div className="text-sm text-gray-400 hidden md:block">
             Step {step} of 3
           </div>
         </div>
@@ -357,10 +373,10 @@ function CreateOrderModal({ onClose, onCreated }) {
           </div>
         )}
 
-        <div className="flex justify-between mt-6">
+        <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
           <button
             onClick={() => (step > 1 ? setStep(step - 1) : onClose())}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
+            className="w-full sm:w-auto px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
           >
             {step === 1 ? 'Cancel' : 'Back'}
           </button>
@@ -377,7 +393,7 @@ function CreateOrderModal({ onClose, onCreated }) {
                 }
                 setStep(step + 1)
               }}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition-colors"
+              className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition-colors"
             >
               Next
             </button>
@@ -385,7 +401,7 @@ function CreateOrderModal({ onClose, onCreated }) {
             <button
               onClick={handleCreate}
               disabled={submitting}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 text-sm font-medium transition-colors"
+              className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 text-sm font-medium transition-colors"
             >
               {submitting ? 'Creating...' : 'Confirm & Create'}
             </button>
@@ -409,7 +425,7 @@ function OrderDetailModal({ order, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 p-6">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-gray-800">Order #{order.id}</h3>
           <button
@@ -479,7 +495,7 @@ function OrderDetailModal({ order, onClose }) {
         <div className="flex justify-end mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
+            className="w-full sm:w-auto px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
           >
             Close
           </button>
@@ -497,16 +513,16 @@ function DeleteConfirmModal({ onConfirm, onCancel }) {
         <p className="text-gray-600 text-sm">
           This will cancel the order and restore all product stock. Continue?
         </p>
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="flex flex-col sm:flex-row justify-end gap-3 mt-6">
           <button
             onClick={onCancel}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
+            className="w-full sm:w-auto px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors"
+            className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors"
           >
             Delete
           </button>

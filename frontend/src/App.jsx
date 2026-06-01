@@ -45,6 +45,7 @@ const tabs = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const renderPage = () => {
     switch (activeTab) {
@@ -63,10 +64,48 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <aside className="w-64 bg-white shadow-lg flex flex-col">
+      {/* Mobile top bar */}
+      <div className="fixed top-0 left-0 right-0 z-30 flex items-center h-14 px-4 bg-white border-b border-gray-200 md:hidden">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="p-2 -ml-2 text-gray-600 hover:text-gray-800 rounded-lg"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <h1 className="ml-3 text-lg font-bold text-gray-800">Inventory</h1>
+      </div>
+
+      {/* Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg flex flex-col transition-transform duration-200 md:relative md:z-auto md:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         <div className="p-5 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-gray-800">📦 Inventory</h1>
-          <p className="text-sm text-gray-500 mt-1">Management System</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-bold text-gray-800">📦 Inventory</h1>
+              <p className="text-sm text-gray-500 mt-1">Management System</p>
+            </div>
+            <button
+              onClick={() => setSidebarOpen(false)}
+              className="p-1 text-gray-400 hover:text-gray-600 rounded-lg md:hidden"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
         <nav className="flex-1 p-3 space-y-1">
           {tabs.map((tab) => {
@@ -74,7 +113,10 @@ export default function App() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  setActiveTab(tab.id)
+                  setSidebarOpen(false)
+                }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-indigo-50 text-indigo-700'
@@ -91,7 +133,10 @@ export default function App() {
           Inventory v1.0
         </div>
       </aside>
-      <main className="flex-1 overflow-auto p-6">{renderPage()}</main>
+
+      <main className="flex-1 overflow-auto p-4 md:p-6 pt-14 md:pt-6">
+        {renderPage()}
+      </main>
     </div>
   )
 }

@@ -96,7 +96,7 @@ export default function Dashboard() {
               <thead className="bg-gray-50 text-gray-600">
                 <tr>
                   <th className="text-left px-6 py-3 font-medium">Name</th>
-                  <th className="text-left px-6 py-3 font-medium">SKU</th>
+                  <th className="text-left px-6 py-3 font-medium hidden sm:table-cell">SKU</th>
                   <th className="text-right px-6 py-3 font-medium">Stock</th>
                 </tr>
               </thead>
@@ -104,7 +104,7 @@ export default function Dashboard() {
                 {data.low_stock_products.map((p) => (
                   <tr key={p.id} className="hover:bg-yellow-50">
                     <td className="px-6 py-3 text-gray-800">{p.name}</td>
-                    <td className="px-6 py-3 text-gray-500">{p.sku}</td>
+                    <td className="px-6 py-3 text-gray-500 hidden sm:table-cell">{p.sku}</td>
                     <td className="px-6 py-3 text-right font-medium text-red-600">{p.quantity}</td>
                   </tr>
                 ))}
